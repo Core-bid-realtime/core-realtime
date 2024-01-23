@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "ibnuibnu",
     "database": "core-realtime",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "ibnuibnu",
     "database": "core-realtime-test",
     "host": "127.0.0.1",
     "dialect": "postgres"

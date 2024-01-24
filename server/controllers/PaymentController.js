@@ -1,101 +1,88 @@
-/** @format */
-
-const midtransClient = require("midtrans-client");
-const { User, Bid, OrderBid, Product } = require("../models");
-const { v4: uuidv4 } = require("uuid");
-
+const midtransClient = require("midtrans-client")
+const { User, Bid, OrderBid, Product } = require('../models');
 class PaymentController {
-	static async initiateMidtrans(req, res, next) {
-		try {
-			const { productsId } = req.params;
-			const products = await Product.findByPk(productsId);
-			console.log(products);
+    static async getMidtransToken(req, res, next) {
+        try {
+            let snap = new midtransClient.Snap({
+                isProduction: false,
+                serverKey: process.env.MIDTRANS_SERVER_KEY
+            })
 
-			const snap = new midtransClient.Snap({
-				isProduction: false,
-				serverKey: process.env.MIDTRANS_SERVER_KEY,
-			});
+            let find = await OrderBid.findByPk(req.params.orderBidId)
 
-			const orderBidId = req.params.orderBidId;
-			const orderBid = await OrderBid.findByPk(orderBidId);
+            let lastOrder = await OrderBid.findOne({
+                order: [["createdAt", "desc"]]
+            })
+            let lastId = lastOrder ? lastOrder.id + 1 : 1
+            let OrderBidUpdate = await find.update({
+                orderId: "ORD-CORE-" + Date.now() + lastId,
+            })
+            let parameter = {
+                "transaction_details": {
+                    "order_id": OrderBidUpdate.orderId,
+                    "gross_amount": find.amount
+                },
+                "customer_details": {
+                    "first_name": req.user.fullname,
+                    "email": req.user.email,
+                },
+                "item_details": [
+                    {
+                        "id": "Core-Product",
+                        "price": find.amount,
+                        "quantity": 1,
+                        "name": "Core Product",
+                        "brand": "Core Product",
+                        "category": "Buy Product"
+                    }
+                ],
+            }
+            let response = await snap.createTransaction(parameter)
+            res.status(200).json(response)
+        } catch (error) {
+            next(error)
+        }
+    }
 
-			if (!orderBid) {
-				return res.status(404).json({ message: "Order not found" });
-			}
+    static async getMidtransNotification(req, res, next) {
+        try {
+            let statusResponse = req.body
+            let orderId = statusResponse.order_id;
+            let transactionStatus = statusResponse.transaction_status;
+            let fraudStatus = statusResponse.fraud_status;
 
-			const orderId = uuidv4();
-			await orderBid.update({ orderId });
+            console.log(`Transaction notification received. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`);
 
-			const transactionDetails = {
-				order_id: orderId,
-				gross_amount: orderBid.amount,
-			};
+            let order = await OrderBid.findOne({
+                where: {
+                    orderId: orderId
+                }
+            })
 
-			const customerDetails = {
-				first_name: req.user.fullname,
-				email: req.user.email,
-			};
+            let successPayment = async () => {
+                await order.update({
+                    status: 'paid'
+                })
+            }
 
-			const itemDetails = [
-				{
-					id: orderId,
-					price: orderBid.amount,
-					quantity: 1,
-					name: `${products.name}`,
-					brand: "Core",
-					category: "Buy Product",
-				},
-			];
-
-			const detailTransaction = {
-				transaction_details: transactionDetails,
-				customer_details: customerDetails,
-				item_details: itemDetails,
-			};
-
-			const response = await snap.createTransaction(detailTransaction);
-			res.status(200).json(response);
-		} catch (error) {
-			next(error);
-		}
-	}
-
-	static async notificationInitiate(req, res, next) {
-		try {
-			const statusResponse = req.body;
-			const orderId = statusResponse.order_id;
-			const transactionStatus = statusResponse.transaction_status;
-			const fraudStatus = statusResponse.fraud_status;
-
-			console.log(
-				`Received transaction notification. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`
-			);
-
-			const order = await OrderBid.findOne({ where: { orderId: orderId } });
-
-			const handlePaymentSuccess = async () => {
-				await order.update({ status: "paid" });
-			};
-
-			if (transactionStatus === "capture") {
-				if (fraudStatus === "accept") {
-					await handlePaymentSuccess();
-				}
-			} else if (transactionStatus === "settlement") {
-				await handlePaymentSuccess();
-			} else if (
-				transactionStatus === "cancel" ||
-				transactionStatus === "deny" ||
-				transactionStatus === "expire"
-			) {
-				await order.update({ status: "failure" });
-			}
-
-			res.status(200).json({ message: "Payment Success" });
-		} catch (error) {
-			next(error);
-		}
-	}
+            if (transactionStatus == 'capture') {
+                if (fraudStatus == 'accept') {
+                    await successPayment()
+                }
+            } else if (transactionStatus == 'settlement') {
+                await successPayment()
+            } else if (transactionStatus == 'cancel' ||
+                transactionStatus == 'deny' ||
+                transactionStatus == 'expire') {
+                await order.update({
+                    status: 'failure'
+                })
+            }
+            res.status(200).json({ message: 'Payment Success' })
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
-module.exports = PaymentController;
+module.exports = PaymentController

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CardHome from "../components/CardHome";
 import Testimony from "../components/Testimony";
-import { fetchHome } from "../../store/appSlice";
+import { fetchHome } from "../store/appSlice";
+import socket from '../socket'
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,13 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    dispatch(fetchHome());
-  }, [dispatch]);
+    socket.connect()
+    dispatch(fetchHome())
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -47,9 +53,9 @@ const HomePage = () => {
           </div>
         </div>
       ) : (
-        <section className="bg-base-100 p-10 mt-10 min-h-screen">
+        <section className="bg-base-100 p-10 mt-40 min-h-screen">
           <div className="container">
-            <h1 className="text-center text-5xl shadow-text animate-logo font-bold font-poppins text-base-content">
+            <h1 className="text-center text-2xl shadow-text animate-logo font-bold font-poppins text-base-content">
               Let's Auction, Get Your Sneakers!
             </h1>
           </div>

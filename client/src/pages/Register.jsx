@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../store/appSlice";
+import { register } from "../store/appSlice";
 
 const Register = () => {
   let { isError, errorMessage } = useSelector((state) => state.appReducer);

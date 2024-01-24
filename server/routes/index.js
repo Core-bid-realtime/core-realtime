@@ -1,5 +1,3 @@
-/** @format */
-
 const express = require("express");
 const router = express.Router();
 
@@ -7,9 +5,7 @@ const errorHandlers = require("../middlewares/errorHandlers");
 const authentication = require("../middlewares/authentication");
 const UserController = require("../controllers/UserController");
 const MainController = require("../controllers/MainController");
-const PaymentController = require( "../controllers/paymentController" )
 
-  ;
 
 router.get("/", (req, res) => {
 	res.status(200).json({ message: "Hello Your Server Was Running Now..." });
@@ -30,6 +26,7 @@ router.post("/bid", MainController.sendBid);
 router.post("/bid/:productId", MainController.getAllBid);
 router.get("/user/me", UserController.userById);
 router.get( "/product/timelimit/:productId", MainController.getTimeLimitProduct );
+
 
 router.use(errorHandlers);
 

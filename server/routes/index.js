@@ -1,5 +1,3 @@
-/** @format */
-
 const express = require("express");
 const router = express.Router();
 
@@ -36,6 +34,7 @@ router.post(
 	"/payment/midtrans/notification",
 	PaymentController.notificationInitiate
 );
+
 
 router.use(errorHandlers);
 

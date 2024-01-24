@@ -1,41 +1,59 @@
-const express = require('express')
-const router = express.Router()
+/** @format */
 
-const UserController = require('../controllers/UserController')
-const PaymentController = require('../controllers/PaymentController')
-const MainController = require('../controllers/MainController')
+const express = require("express");
+const router = express.Router();
 
-const errorHandlers = require('../middlewares/errorHandlers')
-const authentication = require('../middlewares/authentication')
+const UserController = require("../controllers/UserController");
+const PaymentController = require("../controllers/PaymentController");
+const MainController = require("../controllers/MainController");
 
+const errorHandlers = require("../middlewares/errorHandlers");
+const authentication = require("../middlewares/authentication");
 
-router.get('/', (req, res) => {
-    res.status(200).json({ message: "Server is Running..."})
-})
+router.get("/", (req, res) => {
+	res.status(200).json({ message: "Server is Running..." });
+});
 
-router.post('/register', UserController.register)
-router.post('/login', UserController.login)
+router.post("/register", UserController.register);
+router.post("/login", UserController.login);
 
-router.use(authentication)
+router.use(authentication);
+// 1. home (tampilin semua product yang sold false)
+router.get("/products", MainController.getAllProducts);
+// 2. tambah product
+router.post("/products", MainController.postProduct);
+// 3. delete product
+router.delete("/products/:productId", MainController.deleteProduct);
+// 4. ambil semua bid dari suatu product (ambil pesan)
+router.get("/product/:productId", MainController.getProductById);
+// 5. ambil semua list product by user id
+router.get("/list", MainController.listByUserId);
 
-router.get('/products', MainController.getAllProducts)  // home (tampilin semua product yang sold false)
-router.post('/products', MainController.postProduct)    // tambah product
-router.delete('/products/:productId', MainController.deleteProduct) // delete product
-router.get('/product/:productId', MainController.getProductById) // ambil semua bid dari suatu product (ambil pesan)
-router.get('/list', MainController.listByUserId) // ambil semua list product by user id
+// 6. pilih pemenang lelang
+router.post("/products/:productId", MainController.chooseTheWinnerBid);
+// 7. kirim bid
+router.post("/bid", MainController.sendBid);
+// 8. ambil semua bid dari suatu product (ambil pesan)
+router.get("/bid/:productId", MainController.getAllBid);
 
-router.post('/products/:productId', MainController.chooseTheWinnerBid) // pilih pemenang lelang
-router.post('/bid', MainController.sendBid) // kirim bid
-router.get('/bid/:productId', MainController.getAllBid) // ambil semua bid dari suatu product (ambil pesan)
+// 9. ambil semua product yang dimenangin oleh user
+router.get("/user/products", MainController.productsWinBid);
+// 10. ambil semua product yang dimenangin oleh user
+router.get("/user/me", UserController.userById);
+// 11. ambil semua product yang dimenangin oleh user
+router.get("/product/timelimit/:productId", MainController.getTimeLimitProduct);
 
-router.get('/user/products', MainController.productsWinBid) // ambil semua product yang dimenangin oleh user
-router.get('/user/me', UserController.userById) // ambil semua product yang dimenangin oleh user
-router.get('/product/timelimit/:productId', MainController.getTimeLimitProduct) // ambil semua product yang dimenangin oleh user
+// 12. untuk initiate order products ke midtrans
+router.post(
+	"/payment/midtrans/token/:orderBidId",
+	PaymentController.getMidtransToken
+);
+// 13. untuk mengubah status setelah pembayaran midtrans
+router.post(
+	"/payment/midtrans/notification",
+	PaymentController.getMidtransNotification
+);
 
-router.post('/payment/midtrans/token/:orderBidId', PaymentController.getMidtransToken)
-router.post('/payment/midtrans/notification', PaymentController.getMidtransNotification)
+router.use(errorHandlers);
 
-router.use(errorHandlers)
-
-
-module.exports = router
+module.exports = router;

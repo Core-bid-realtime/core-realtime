@@ -1,8 +1,9 @@
 import React from 'react';
 import NavbarDropdownResponsive from './NavbarDropdownResponsive';
 import { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import logo from '../assets/logo1.png';
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -39,12 +40,8 @@ const Navbar = () => {
         <div className="navbar bg-base-300 sticky top-0">
           <div className="navbar-start pb-1">
             <NavbarDropdownResponsive />
-            <a href="/" className="text-3xl px-9 font-serif">
-              <img
-                src="/logo.png"
-                alt="Logo"
-                style={{ width: '120px' }}
-              />
+            <a href="/" className="text-5xl px-9 animate-logo">
+              <span className="logo-text text-4xl font-poppins font-bold animate-pulse">CORE'</span>
             </a>
           </div>
           <div className="navbar-center hidden lg:flex pb-1">

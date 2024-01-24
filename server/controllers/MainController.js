@@ -143,6 +143,31 @@ class MainController {
     }
   }
 
+  static async getAllBid(req, res, next) {
+    try {
+      const productId = req.params.productId;
+
+      const product = await Product.findByPk(productId);
+
+      if (!product) {
+        throw { name: 'productNotFound' }
+      }
+
+      const bids = await Bid.findAll({
+        where: { ProductId: productId },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ['password'] },
+          },
+        ],
+        order: [['id', 'ASC']]
+      });
+      return res.status(200).json(bids);
+    } catch (error) {
+      next(error);
+    }
+  }
   
 }
 

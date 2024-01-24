@@ -22,6 +22,7 @@ router.get('/products/:productId', MainController.getProductById)
 router.get('/list', MainController.listByUserId) 
 router.post('/products/:productId', MainController.chooseTheWinnerBid) // pilih pemenang lelang
 router.post('/bid', MainController.sendBid)
+router.post('/bid/:productId', MainController.getAllBid)
 
 router.use(errorHandlers);
 

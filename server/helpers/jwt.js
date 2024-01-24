@@ -1,16 +1,19 @@
-const jwt = require('jsonwebtoken');
-const secret = process.env.JWT_SECRET
-function signToken(payload) {
-    let token = jwt.sign(payload, secret);
-    return token;
+const jwt = require('jsonwebtoken')
+
+let JWT_SECRET = process.env.JWT_SECRET
+function signToken(dataUser) {
+    let { id } = dataUser
+    return jwt.sign({ id }, JWT_SECRET)
 }
 function verifyToken(token) {
-    let payload = jwt.verify(token, secret);
-    return payload;
+    let data = jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return 'invalidToken'
+        } else {
+            return decoded
+        }
+    })
+    return data
 }
 
-module.exports = {
-    signToken,
-    verifyToken
-}
-
+module.exports = { signToken, verifyToken }

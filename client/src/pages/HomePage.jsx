@@ -56,7 +56,7 @@ const HomePage = () => {
           <div className="mt-8 flex justify-center">
             <input
               type="text"
-              placeholder="Search auctions..."
+              placeholder="Search Here..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="input input-bordered w-80 text-base"

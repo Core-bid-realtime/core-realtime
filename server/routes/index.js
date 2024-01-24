@@ -1,19 +1,21 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const errorHandlers = require('../middlewares/errorHandlers')
-const authentication = require('../middlewares/authentication')
+const errorHandlers = require("../middlewares/errorHandlers");
+const authentication = require("../middlewares/authentication");
+const UserController = require("../controllers/UserController");
+const MainController = require("../controllers/MainController");
 
-const MainController = require('../controllers/MainController')
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is Running..." });
+});
 
-router.get('/', (req, res) => {
-    res.status(200).json({ message: "Server is Running..."})
-})
 
-router.get('/products', MainController.getAllProducts)
+router.post("/register", UserController.register);
+router.post("/login", UserController.login);
+router.use(authentication);
+router.get("/products", MainController.getAllProducts);
 
-router.use(authentication)
+router.use(errorHandlers);
 
-router.use(errorHandlers)
-
-module.exports = router
+module.exports = router;

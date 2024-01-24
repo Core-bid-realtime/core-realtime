@@ -73,6 +73,27 @@ class MainController {
     }
   }
 
+  static async listByUserId(req, res, next) {
+    try {
+
+      const products = await Product.findAll({
+        where: {
+          UserId: req.user.id,
+        },
+        include: {
+          model: User,
+          attributes: {
+            exclude: ["password"],
+          },
+        },
+      });
+
+      res.status(200).json(products);
+    } catch (error) {
+      next(error)
+    }
+  }
+
 }
 
 module.exports = MainController;

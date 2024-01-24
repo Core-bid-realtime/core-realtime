@@ -19,7 +19,7 @@ router.get("/products", MainController.getAllProducts);
 router.post('/products', MainController.postProduct)    // tambah product
 router.delete('/products/:productId', MainController.deleteProduct) // delete product
 router.get('/products/:productId', MainController.getProductById)
-
+router.get('/list', MainController.listByUserId) 
 router.use(errorHandlers);
 
 module.exports = router;

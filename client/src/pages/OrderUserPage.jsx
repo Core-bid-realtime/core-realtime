@@ -1,6 +1,7 @@
 /** @format */
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getProductsWinBid } from "../store/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -11,6 +12,12 @@ const OrderUserPage = () => {
 	let { dataProductsWin, loadingProductsWinBid } = useSelector(
 		(state) => state.appReducer
 	);
+
+	const navigate = useNavigate();
+
+	const navigateToProfile = () => {
+		navigate("/");
+	};
 
 	useEffect(() => {
 		dispatch(getProductsWinBid());
@@ -25,7 +32,7 @@ const OrderUserPage = () => {
 
 	async function handlePayment(orderBidId) {
 		try {
-			let response = await axios({
+			let { data } = await axios({
 				method: "post",
 				url:
 					import.meta.env.VITE_BASE_URL +
@@ -34,9 +41,42 @@ const OrderUserPage = () => {
 					Authorization: "Bearer " + localStorage.access_token,
 				},
 			});
-			window.snap.pay(response.token);
+			window.snap.pay(data.token, {
+				onSuccess: async function (result) {
+					console.log("Payment Success:", result);
+					const response = await axios.post(
+						"http://localhost:3000/payment/midtrans/notification",
+						result,
+						{
+							headers: {
+								Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+								"Content-Type": "application/json",
+							},
+						}
+					);
+					console.log(response.data);
+					navigateToProfile();
+				},
+				onPending: function (result) {
+					// console.log( "Payment Pending:", result );
+					Swal.fire({
+						icon: "info",
+						title: "Payment Pending",
+						text: `${result}`,
+					});
+					navigateToProfile();
+				},
+				onError: function (result) {
+					// console.log("Payment Error:", result);
+					Swal.fire({
+						icon: "error",
+						title: "Payment Error",
+						text: `${result}`,
+					});
+				},
+			});
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",

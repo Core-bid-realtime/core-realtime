@@ -10,10 +10,11 @@ router.get("/", (req, res) => {
   res.status(200).json({ message: "Server is Running..." });
 });
 
-
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
+
 router.use(authentication);
+
 router.get("/products", MainController.getAllProducts);
 
 router.use(errorHandlers);

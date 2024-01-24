@@ -40,7 +40,7 @@ const OrderUserPage = () => {
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",
-				text: "Error Payment",
+				text: `${error.response.data.message}`,
 			});
 		}
 	}

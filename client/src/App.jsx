@@ -1,7 +1,16 @@
-export default function App() {
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+
+const Layout = () => {
   return (
-    <h1 className="text-3xl font-bold underline text-green-600">
-      Hello world!
-    </h1>
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
   )
 }
+
+export default Layout

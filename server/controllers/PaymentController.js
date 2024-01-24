@@ -2,7 +2,7 @@
 
 const midtransClient = require("midtrans-client");
 const { User, Bid, OrderBid, Product } = require("../models");
-import { v4 as uuidv4 } from "uuid";
+const { v4: uuidv4 } = require("uuid");
 
 class PaymentController {
 	static async initiateMidtrans(req, res, next) {

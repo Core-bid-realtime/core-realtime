@@ -12,7 +12,7 @@ To get started with Core Realtime, follow these steps:
 4. Start the server with `npm start`.
 
 ## Navigation
-For more information about the API and how to use it, please refer to [API_DOCS.md](API_DOCS.md).
+For more information about the API and how to use it, please refer to [API_DOCS.md](./server/API_DOCS.md).
 
 ## Dependencies
 Here is a list of major dependencies used in this project:

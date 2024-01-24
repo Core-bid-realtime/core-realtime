@@ -1,46 +1,44 @@
-import React from 'react'
-import NavbarDropdownResponsive from './NavbarDropdownResponsive'
-import { useState, useEffect } from 'react'
-import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import NavbarDropdownResponsive from './NavbarDropdownResponsive';
+import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  let navigate = useNavigate()
-  const savedTheme = localStorage.getItem('theme')
-  const initialTheme = savedTheme || 'luxury'
-  const [theme, setTheme] = useState(initialTheme)
+  let navigate = useNavigate();
+  const savedTheme = localStorage.getItem('theme');
+  const initialTheme = savedTheme || 'luxury';
+  const [theme, setTheme] = useState(initialTheme);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'pastel' ? 'luxury' : 'pastel'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-  }
+    const newTheme = theme === 'pastel' ? 'luxury' : 'pastel';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
 
   let logoutHandler = () => {
     Swal.fire({
-      title: "Do you want to logout",
+      title: 'Do you want to logout',
       showCancelButton: true,
-      confirmButtonText: "Yes",
+      confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem('access_token')
-        navigate('/login')
+        localStorage.removeItem('access_token');
+        navigate('/login');
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
     <>
       <nav id='home'>
-        <div className="navbar bg-base-300">
-          <div className="navbar-start pb-1 ">
-
+        <div className="navbar bg-base-300 sticky top-0">
+          <div className="navbar-start pb-1">
             <NavbarDropdownResponsive />
-
             <a href="/" className="text-3xl px-9 font-serif">
               <img
                 src="/logo.png"
@@ -79,11 +77,10 @@ const Navbar = () => {
               <svg className="swap-off fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" /></svg>
             </label>
           </div>
-
         </div>
       </nav>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

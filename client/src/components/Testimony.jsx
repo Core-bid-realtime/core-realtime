@@ -7,13 +7,13 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://akcdn.detik.net.id/visual/2021/10/11/jisoo-blackpink_169.png?w=400&q=90"
+              src="https://i.pinimg.com/736x/7e/e4/92/7ee4927a072106b9b2d27abf2dcce02b.jpg"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Kim Ji-Soo</h2>
+            <h2 className="card-title">Kurokawa, Akane</h2>
             <p>
             The Best Experience Doing An Auction 
             <br/>In This Online Shop.
@@ -52,17 +52,17 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://e0.pxfuel.com/wallpapers/647/937/desktop-wallpaper-yeji-itzy-loco.jpg"
+              src="https://i.pinimg.com/564x/5a/64/8f/5a648fb57f18f93d0ffe75aab87f45dd.jpg"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Hwang Ye Ji</h2>
+            <h2 className="card-title">Senku , Ishigami</h2>
             <p>
               The Items Are Authentic.
               <br />
-              100% Trusted and recommended.
+              10000000000% Trusted and recommended.
             </p>
             <div className="rating">
               <input
@@ -98,13 +98,13 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://i.pinimg.com/736x/16/4b/4d/164b4d37eef5f88838b4b922ec6f0973.jpg"
+              src="https://i.pinimg.com/564x/8d/11/ae/8d11ae0c79f65e3ff3171a30587a9e11.jpg"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Kazuha Nakamura</h2>
+            <h2 className="card-title">Oreki Houtarou</h2>
             <p>
               At This Auction I Got My Favourite Item
               <br />
@@ -146,13 +146,13 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://cdn.idntimes.com/content-images/community/2021/11/img-20211130-083246-8d569333abbc9e26646dc6a398891324-ce29c808d65c81bf82b95199c11839c2.jpg"
+              src="https://i.pinimg.com/564x/1d/f3/75/1df375151d21a9bb8a1fc48bc836b9a5.jpg"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Kim Tae-Hyung</h2>
+            <h2 className="card-title">Kitagawa Marin</h2>
             <p>
               I Don't Want To Move To Another Place,
               <br /> It's Better To Just Buy In Here.
@@ -191,13 +191,13 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://cdn.idntimes.com/content-images/community/2019/09/white-day-photoshoot-bts-42698711-1280-1920-f9e8174a22b386c86790e11b01012cc3.jpg"
+              src="https://i.pinimg.com/564x/ae/47/1b/ae471b92ccfd858aa847f107723c354c.jpg"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Jeon Jung-kook</h2>
+            <h2 className="card-title">Nabe</h2>
             <p>There Are Many Choices And
                 <br/>Definitely Quality and Authenticity</p>
             <div className="rating">
@@ -234,13 +234,13 @@ const Testimony = () => {
         <div className="card card-side bg-base-100 shadow-xl mt-20 mx-5">
           <figure>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJI5QD0j78Hz172bODNc7M3rxB-PG98yvDuxCU8MqT3wIxkamCpdmKh_RyznQB7sz0Vck&usqp=CAU"
+              src="https://staticg.sportskeeda.com/editor/2023/10/2aa95-16983528534745.png?w=840"
               alt="Photo"
               className="object-cover w-48 h-48"
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">Kim Nam-joon</h2>
+            <h2 className="card-title">Toji Fushiguro</h2>
             <p>
               Customer Service Fast And Responsive.
               <br /> It Gets Easier If Have Some Problems.

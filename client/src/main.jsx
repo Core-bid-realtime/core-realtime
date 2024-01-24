@@ -20,6 +20,8 @@ import Layout from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import BidProductPage from "./pages/BidProductPage.jsx";
 import OrderUserPage from "./pages/OrderUserPage.jsx";
+import AddAuction from "./pages/AddAuction.jsx";
+import ListAuction from "./pages/ListAuction.jsx";
 
 let authHome = () => {
 	let access_token = localStorage.access_token;
@@ -61,11 +63,11 @@ const router = createBrowserRouter([
 				element: <HomePage />,
 				loader: authHome,
 			},
-			// {
-			// 	path: "/product",
-			// 	element: <AddAuction />,
-			// 	loader: authHome,
-			// },
+			{
+				path: "/product",
+				element: <AddAuction />,
+				loader: authHome,
+			},
 			{
 				path: "/bid/:productId",
 				element: <BidProductPage />,
@@ -74,6 +76,11 @@ const router = createBrowserRouter([
 			{
 				path: "/order",
 				element: <OrderUserPage />,
+				loader: authHome,
+			},
+			{
+				path: "/list",
+				element: <ListAuction />,
 				loader: authHome,
 			},
 		],

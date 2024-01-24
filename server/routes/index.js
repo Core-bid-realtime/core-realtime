@@ -18,6 +18,7 @@ router.use(authentication);
 router.get("/products", MainController.getAllProducts);
 router.post('/products', MainController.postProduct)    // tambah product
 router.delete('/products/:productId', MainController.deleteProduct) // delete product
+router.get('/products/:productId', MainController.getProductById)
 
 router.use(errorHandlers);
 

@@ -31,20 +31,48 @@ class MainController {
       const { productId } = req.params;
 
       if (!productId) {
-        throw { name: 'invalidProductId' }
+        throw { name: "invalidProductId" };
       }
 
-      const data = await Product.findByPk(productId)
+      const data = await Product.findByPk(productId);
 
       if (!data) {
-        throw { name: 'productNotFound' }
+        throw { name: "productNotFound" };
       }
-      await data.destroy()
+      await data.destroy();
       res.status(200).json({ message: `Successfully Deleted Product` });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
+
+  static async getProductById(req, res, next) {
+    try {
+      const { productId } = req.params;
+      if (!productId) {
+        throw { name: "invalidProductId" };
+      }
+      const data = await Product.findOne({
+        where: {
+          id: productId,
+        },
+        include: {
+          model: User,
+          attributes: {
+            exclude: ["password"],
+          },
+        },
+      });
+
+      if (!data) {
+        throw { name: "productNotFound" };
+      }
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 module.exports = MainController;

@@ -61,6 +61,9 @@ class PaymentController {
 
 			let successPayment = async () => {
 				await order.update({
+					where: {
+						orderId: orderId,
+					},
 					status: "paid",
 				});
 			};

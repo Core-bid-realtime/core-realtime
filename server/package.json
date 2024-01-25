@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon bin/www",
-    "start": "bin/www",
+    "dev": "npx nodemon app.js",
+    "start": "node app.js",
     "test": "jest --detectOpenHandles --forceExit --silent --coverage"
   },
   "keywords": [],

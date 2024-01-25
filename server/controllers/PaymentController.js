@@ -55,7 +55,7 @@ class PaymentController {
 
 			let order = await OrderBid.findOne({
 				where: {
-					orderId: orderId,
+					orderId: order,
 				},
 			});
 

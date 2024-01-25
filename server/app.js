@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const { createServer } = require('node:http')
 const { Server } = require('socket.io')
@@ -56,4 +60,7 @@ io.on('connection', (socket) => {
   })
 })
 
-module.exports = app
+
+server.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
+})

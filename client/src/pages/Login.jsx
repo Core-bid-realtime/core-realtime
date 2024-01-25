@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/appSlice";
-
+import logo from "../assets/logo2.png";
 
 const Login = () => {
   let [input, setInput] = useState();
@@ -63,7 +63,7 @@ const Login = () => {
             </div>
 
             <div className="relative bg-base-300 rounded-md">
-              <img src={"#"} alt="img" className="w-[420px] h-[500px] hidden rounded-r-2xl md:block object-cover" />
+              <img src={logo} alt="img" className="w-[500px] h-[500px] hidden rounded-r-2xl md:block object-cover animate-logo" />
             </div>
           </div>
         </form>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../store/appSlice";
+import logo from "../assets/logo2.png";
 
 const Register = () => {
   let { isError, errorMessage } = useSelector((state) => state.appReducer);
@@ -81,8 +82,9 @@ const Register = () => {
             </div>
 
             <div className="relative bg-base-300 rounded-md">
-              <img src={"#"} alt="img" className="w-[450px] h-[550px] hidden rounded-r-2xl md:block object-cover" />
+              <img src={logo} alt="img" className="w-[500px] h-[500px] animate-pulse hidden rounded-r-2xl md:block object-cover" />
             </div>
+
           </div>
         </form>
       </div>

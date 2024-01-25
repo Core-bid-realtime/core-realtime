@@ -26,7 +26,7 @@ const Footer = () => {
           <a className="link link-hover">Advertisement</a>
         </nav>
         <aside>
-          <img src={logo} alt="logo" width={100} height={100} />
+          <img src={logo} alt="logo" width={150} height={150} />
           <p className="footer-title">
             Core Realtime Sneaker's Auction.
             <br />

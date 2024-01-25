@@ -16,7 +16,7 @@ const OrderUserPage = () => {
 	const navigate = useNavigate();
 
 	const navigateToProfile = () => {
-		navigate("/");
+		navigate("/order");
 	};
 
 	useEffect(() => {
@@ -44,18 +44,23 @@ const OrderUserPage = () => {
 			window.snap.pay(data.token, {
 				onSuccess: async function (result) {
 					console.log("Payment Success:", result);
-					const response = await axios.post(
-						"http://localhost:3000/payment/midtrans/notification",
-						result,
-						{
-							headers: {
-								Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-								"Content-Type": "application/json",
-							},
-						}
-					);
-					console.log(response.data);
-					navigateToProfile();
+					try {
+						const response = await axios.post(
+							"http://localhost:3000/payment/midtrans/notification",
+							result,
+							{
+								headers: {
+									Authorization: `Bearer ${localStorage.getItem(
+										"access_token"
+									)}`,
+								},
+							}
+						);
+						console.log(response.data);
+						navigateToProfile();
+					} catch (error) {
+						console.log(error);
+					}
 				},
 				onPending: function (result) {
 					// console.log( "Payment Pending:", result );
@@ -145,7 +150,7 @@ const OrderUserPage = () => {
 									{dataProductsWin &&
 										dataProductsWin.map((product) => {
 											return (
-												<tr key={product.orderId} className='text-center'>
+												<tr key={product.id} className='text-center'>
 													<td className='px-6 py-4 whitespace-nowrap'>
 														<div className='text-sm text-base-content'>
 															{product.orderId}
@@ -166,11 +171,12 @@ const OrderUserPage = () => {
 														{product.status !== "paid" ? (
 															<button
 																onClick={() => handlePayment(product.id)}
-																className='ml-2 text-base-content hover:bg-base-100 bg-base-300 w-[50px] h-[30px] rounded-lg'>
+																className='ml-2 text-base-content hover:bg-base-100 bg-base-300 w-[50px] h-[30px] rounded-lg'
+																disabled={product.status === "paid"}>
 																Pay
 															</button>
 														) : (
-															product.status === "Already paid"
+															product.status === "paid"
 														)}
 													</td>
 												</tr>

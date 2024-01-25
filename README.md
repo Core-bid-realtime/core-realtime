@@ -24,3 +24,9 @@ Here is a list of major dependencies used in this project:
 ## Features
 - **Midtrans Payment Gateway**: Integration with Midtrans for secure and efficient transaction processing.
 - **Socket.io**: For real-time bidding and countdown timers in auctions, providing live updates without the need to reload the page.
+
+# Client 
+- link : https://core-auction.web.app
+
+# Server
+- link : 

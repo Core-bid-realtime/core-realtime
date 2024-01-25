@@ -29,7 +29,6 @@ const OrderUserPage = () => {
       currency: "IDR",
     });
   }
-
   async function handlePayment(orderBidId) {
     try {
       let { data } = await axios({
@@ -89,6 +88,65 @@ const OrderUserPage = () => {
       });
     }
   }
+	async function handlePayment(orderBidId) {
+		try {
+			let { data } = await axios({
+				method: "post",
+				url:
+					import.meta.env.VITE_BASE_URL +
+					`/payment/midtrans/token/${orderBidId}`,
+				headers: {
+					Authorization: "Bearer " + localStorage.access_token,
+				},
+			});
+			window.snap.pay(data.token, {
+				onSuccess: async function (result) {
+					console.log("Payment Success:", result);
+					try {
+						const response = await axios.post(
+							import.meta.env.VITE_BASE_URL +  `/payment/midtrans/notification`,
+							result,
+							{
+								headers: {
+									Authorization: `Bearer ${localStorage.getItem(
+										"access_token"
+									)}`,
+								},
+							}
+						);
+						console.log(response.data);
+						navigateToProfile();
+					} catch (error) {
+						console.log(error);
+					}
+				},
+				onPending: function (result) {
+					// console.log( "Payment Pending:", result );
+					Swal.fire({
+						icon: "info",
+						title: "Payment Pending",
+						text: `${result}`,
+					});
+					navigateToProfile();
+				},
+				onError: function (result) {
+					// console.log("Payment Error:", result);
+					Swal.fire({
+						icon: "error",
+						title: "Payment Error",
+						text: `${result}`,
+					});
+				},
+			});
+		} catch (error) {
+			// console.log(error);
+			Swal.fire({
+				icon: "error",
+				title: "Oops...",
+				text: `${error.response.data.message}`,
+			});
+		}
+	}
 
   return (
     <>

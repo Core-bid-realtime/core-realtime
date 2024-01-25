@@ -55,14 +55,14 @@ class PaymentController {
 
 			let order = await OrderBid.findOne({
 				where: {
-					orderId: orderId,
+					orderId: order,
 				},
 			});
 
 			let successPayment = async () => {
 				await order.update({
 					where: {
-						orderId: orderId,
+						orderId: order,
 					},
 					status: "paid",
 				});

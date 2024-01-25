@@ -60,7 +60,7 @@ class PaymentController {
 			});
 
 			let successPayment = async () => {
-				await order.update({
+				await OrderBid.update({
 					status: "paid",
 				});
 			};
@@ -76,7 +76,7 @@ class PaymentController {
 				transactionStatus == "deny" ||
 				transactionStatus == "expire"
 			) {
-				await order.update({
+				await OrderBid.update({
 					status: "failure",
 				});
 			}

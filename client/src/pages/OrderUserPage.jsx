@@ -170,7 +170,7 @@ const OrderUserPage = () => {
 																Pay
 															</button>
 														) : (
-															"Already paid"
+															product.status === "Already paid"
 														)}
 													</td>
 												</tr>
